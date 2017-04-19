@@ -22,30 +22,4 @@ defmodule Messenger.Message do
       message: message.content
     }
   end
-
-  def from_text("/confess " <> confession) do
-    put_text(new(), """
-      Please confirm if this is your confession?:
-        #{confession}
-    """)
-  end
-
-  def from_text("/about") do
-    put_text(new(), Confession.description)
-  end
-
-  def from_text("/about") do
-    put_text(new(), """
-      Available commands are:
-        /help
-        /about
-        /confess <your-confession>
-    """)
-  end
-
-  def from_text(_) do
-    put_text(new(), """
-      To get started, please type "/confess <your-confession>" or "/help" for help
-    """)
-  end
 end

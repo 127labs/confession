@@ -2,6 +2,7 @@ defmodule Confession.WebhookController do
   use Confession, :controller
 
   alias Messenger.Message
+  alias Confession.Interpreter
 
   def show(conn, params) do
     params
@@ -25,8 +26,6 @@ defmodule Confession.WebhookController do
   defp handle_event("message", %{sender: sender, content: content}) do
     content
     |> Map.get("text")
-    |> Message.from_text()
-    |> Message.put_recipient(sender)
-    |> Messenger.send_message!(async: :nolink)
+    |> Interpreter.from_text([sender])
   end
 end
