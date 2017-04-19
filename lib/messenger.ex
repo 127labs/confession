@@ -37,8 +37,6 @@ defmodule Messenger do
     Application.fetch_env!(:confession, :messenger_validation_token)
   end
 
-  def from_page(%{"object" => "page", "entry" => [%{"messaging" => [event]}]}), do: event
-
   defmacro __using__(_) do
     quote do
       import Maxwell.Conn, except: [new: 0]
