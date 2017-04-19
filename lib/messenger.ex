@@ -30,11 +30,11 @@ defmodule Messenger do
   end
 
   def access_token do
-    Application.fetch_env!(:confession, :fb_page_access_token)
+    Application.fetch_env!(:confession, :page_access_token)
   end
 
   def validation_token do
-    Application.fetch_env!(:confession, :fb_messenger_validation_token)
+    Application.fetch_env!(:confession, :messenger_validation_token)
   end
 
   defmacro __using__(_) do

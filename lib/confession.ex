@@ -6,9 +6,11 @@ defmodule Confession do
   def router do
     quote do
       use Plug.Router
+
       if Mix.env == :dev do
         use Plug.Debugger
       end
+
       use Plug.ErrorHandler
 
       plug :match
@@ -42,12 +44,8 @@ defmodule Confession do
     quote do
       use Plug.Builder
 
-      def action(_, opts) do
-        Keyword.fetch!(opts, :action)
-      end
-
       def call(conn, opts) do
-        apply(__MODULE__, action(conn, opts), [conn, conn.params])
+        apply(__MODULE__, Keyword.fetch!(opts, :action), [conn, conn.params])
       end
     end
   end

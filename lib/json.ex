@@ -1,4 +1,8 @@
 defmodule JSON do
+  @moduledoc """
+  JSON serializer using an Erlang NIF called Jiffy
+  """
+
   def decode(binary),
     do: {:ok, decode!(binary)}
 
