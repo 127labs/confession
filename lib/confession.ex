@@ -3,6 +3,19 @@ defmodule Confession do
     apply(__MODULE__, which, [])
   end
 
+  def description do
+    """
+    Confession is a bot for publishing post to a Facebook page anonymously,
+    We don't store any data or references to your Facebook profile and you can find us on GitHub[0] to dig into our source code implementation.
+
+    Our inspiration came from the likes of UniKL Confessions[1] and UITM Confessions[2] and the rest that follows a similar model.
+
+    [0] https://github.com/imranismail/confession
+    [1] https://www.facebook.com/uniklconfessions
+    [2] https://www.facebook.com/uitm.confessions.official
+    """
+  end
+
   def router do
     quote do
       use Plug.Router

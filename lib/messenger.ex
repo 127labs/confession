@@ -11,11 +11,11 @@ defmodule Messenger do
 
   adapter Maxwell.Adapter.Hackney
 
-  def send_message!(body, opts \\ []) do
+  def send_message!(message, opts \\ []) do
     task = fn ->
       Maxwell.Conn.new()
       |> put_query_string(%{access_token: access_token()})
-      |> put_req_body(body)
+      |> put_req_body(Messenger.Message.to_params(message))
       |> post!()
     end
 
@@ -36,6 +36,8 @@ defmodule Messenger do
   def validation_token do
     Application.fetch_env!(:confession, :messenger_validation_token)
   end
+
+  def from_page(%{"object" => "page", "entry" => [%{"messaging" => [event]}]}), do: event
 
   defmacro __using__(_) do
     quote do

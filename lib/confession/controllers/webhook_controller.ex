@@ -1,6 +1,8 @@
 defmodule Confession.WebhookController do
   use Confession, :controller
 
+  alias Messenger.Message
+
   def show(conn, params) do
     params
     |> Map.get("hub.verify_token")
@@ -14,21 +16,17 @@ defmodule Confession.WebhookController do
     end
   end
 
-  def create(conn, %{"object" => "page"} = params) do
-    params
-    |> compose_message()
-    |> Messenger.send_message!(async: :nolink)
-
+  def create(conn, params) do
+    event = Messenger.Event.from_page(params)
+    handle_event(event.topic, event)
     send_resp(conn, :ok, "")
   end
 
-  def create(conn, _) do
-    send_resp(conn, :bad_request, "")
-  end
-
-  defp sender(%{"entry" => [%{"messaging" => [%{"sender" => sender}]}]}), do: sender
-  defp text(text), do: %{text: text}
-  defp compose_message(params) do
-    %{recipient: sender(params), message: text("Hello, world!")}
+  defp handle_event("message", %{sender: sender, content: content}) do
+    content
+    |> Map.get("text")
+    |> Message.from_text()
+    |> Message.put_recipient(sender)
+    |> Messenger.send_message!(async: :nolink)
   end
 end
