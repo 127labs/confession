@@ -7,7 +7,6 @@ defmodule Confession.WebhookController do
   def show(conn, params) do
     params
     |> Map.get("hub.verify_token")
-    |> Base.url_decode64!(padding: false)
     |> Kernel.==(Messenger.validation_token)
     |> case do
       true ->
