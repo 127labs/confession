@@ -28,4 +28,15 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :confession, ecto_repos: [Confession.Repo]
+
+config :confession, Confession.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "confession_#{Mix.env}",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  port: "5432"
+
 import_config "config.secret.exs"

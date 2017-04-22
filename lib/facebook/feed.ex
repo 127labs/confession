@@ -2,7 +2,7 @@ defmodule Facebook.Feed do
   use Facebook
 
   def new do
-    Conn.new
+    Conn.new()
     |> Conn.put_path("/v2.9/#{id()}/feed/")
     |> Conn.put_query_string(%{access_token: access_token()})
   end

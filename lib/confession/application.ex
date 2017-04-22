@@ -7,6 +7,7 @@ defmodule Confession.Application do
     children = [
       Confession.Endpoint.spec(),
       supervisor(Confession.Task, []),
+      supervisor(Confession.Repo, []),
     ]
 
     opts = [strategy: :one_for_one, name: Confession.Supervisor]

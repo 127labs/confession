@@ -57,8 +57,30 @@ defmodule Confession do
     quote do
       use Plug.Builder
 
+      import Confession.ControllerHelpers
+
       def call(conn, opts) do
-        apply(__MODULE__, Keyword.fetch!(opts, :action), [conn, conn.params])
+        action = Keyword.fetch!(opts, :action)
+        conn = put_private(conn, :action, action)
+        apply(__MODULE__, action, [conn, conn.params])
+      end
+    end
+  end
+
+  def context do
+    quote do
+      import Ecto.{Query, Changeset}, warn: false
+    end
+  end
+
+  def view do
+    quote do
+      use Plug.Builder
+
+      import Confession.ViewHelpers
+
+      def call(conn, opts) do
+        put_private(conn, :view, __MODULE__)
       end
     end
   end

@@ -5,7 +5,7 @@ defmodule Facebook.Message do
             content: nil
 
   def new(opts \\ []) do
-    Conn.new
+    Conn.new()
     |> Conn.put_path("/v2.6/me/messages")
     |> Conn.put_query_string(%{access_token: access_token()})
     |> Conn.put_private(:message, struct(__MODULE__, opts))
