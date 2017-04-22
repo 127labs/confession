@@ -1,4 +1,4 @@
-defmodule Messenger.Event do
+defmodule Facebook.Event do
   defstruct recipient: nil,
             sender: nil,
             topic: nil,

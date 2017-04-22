@@ -1,13 +1,12 @@
 defmodule Confession.WebhookController do
   use Confession, :controller
 
-  alias Messenger.Message
   alias Confession.Interpreter
 
   def show(conn, params) do
     params
     |> Map.get("hub.verify_token")
-    |> Kernel.==(Messenger.validation_token)
+    |> Kernel.==(Facebook.verification_token)
     |> case do
       true ->
         send_resp(conn, :ok, conn.params["hub.challenge"])
@@ -17,7 +16,7 @@ defmodule Confession.WebhookController do
   end
 
   def create(conn, params) do
-    event = Messenger.Event.from_page(params)
+    event = Facebook.Event.from_page(params)
     handle_event(event.topic, event)
     send_resp(conn, :ok, "")
   end
