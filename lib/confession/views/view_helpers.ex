@@ -17,8 +17,10 @@ defmodule Confession.ViewHelpers do
   end
 
   defp resource_name(view, opts) do
-    Keyword.get(opts, :as, fn ->
-      Naming.resource_name(view, "View")
+    Keyword.get_lazy(opts, :as, fn ->
+      view
+      |> Naming.resource_name("View")
+      |> String.to_atom()
     end)
   end
 end
