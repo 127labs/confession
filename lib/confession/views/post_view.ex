@@ -7,7 +7,7 @@ defmodule Confession.PostView do
     }
   end
 
-  def render("index.json", %{post: posts}) do
+  def render("index.json", %{posts: posts}) do
     %{
       data: render_many(posts, __MODULE__, "post.json")
     }

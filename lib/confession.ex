@@ -61,7 +61,12 @@ defmodule Confession do
 
       def call(conn, opts) do
         action = Keyword.fetch!(opts, :action)
-        conn = put_private(conn, :action, action)
+
+        conn =
+          conn
+          |> put_private(:action, action)
+          |> super(opts)
+
         apply(__MODULE__, action, [conn, conn.params])
       end
     end
@@ -80,7 +85,9 @@ defmodule Confession do
       import Confession.ViewHelpers
 
       def call(conn, opts) do
-        put_private(conn, :view, __MODULE__)
+        conn
+        |> put_private(:view, __MODULE__)
+        |> super(opts)
       end
     end
   end
