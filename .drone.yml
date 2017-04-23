@@ -8,7 +8,7 @@ pipeline:
     email: imran.ismail@icommerce.asia
     tags:
     - latest
-    - ${DRONE_COMMIT_SHA:0:7}
+    - ${DRONE_COMMIT_SHA}
     build_args:
     - FB_PAGE_ACCESS_TOKEN=${FB_PAGE_ACCESS_TOKEN}
     - FB_VERIFICATION_TOKEN=${FB_VERIFICATION_TOKEN}
@@ -18,6 +18,6 @@ pipeline:
     api_server: https://${KUBERNETES_MASTER}/
     skip_tls_verify: true
     chart: ./charts/confession
-    values: image.tag=${DRONE_COMMIT_SHA:0:7}
+    values: image.tag=${DRONE_COMMIT_SHA}
     release: confession
     token: ${KUBERNETES_SA_TOKEN}
