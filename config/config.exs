@@ -33,7 +33,7 @@ config :confession,
   ecto_repos: [Confession.Repo],
   fb_verification_token: System.get_env("FB_VERIFICATION_TOKEN"),
   fb_page_access_token: System.get_env("FB_PAGE_ACCESS_TOKEN"),
-  secret_key_base: System.get_env("SECRET_KEY")
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 config :confession, Confession.Repo,
   adapter: Ecto.Adapters.Postgres,
