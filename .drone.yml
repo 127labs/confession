@@ -16,7 +16,7 @@ pipeline:
     image: ipedrazas/drone-helm
     api_server: https://kubernetes/
     skip_tls_verify: true
-    chart: ./charts
+    chart: ./charts/confession
     values: image.tag=${DRONE_COMMIT_SHA:0:7}
     release: confession
     token: ${SERVICE_ACCOUNT_TOKEN}
