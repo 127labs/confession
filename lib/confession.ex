@@ -41,6 +41,12 @@ defmodule Confession do
 
       require Logger
 
+      plug :put_secret_key_base
+
+      def put_secret_key_base(conn, _) do
+        Map.put(conn, :secret_key_base, Application.get_env(:confession, :secret_key_base))
+      end
+
       def spec do
         proto = :http
         ip    = {127, 0, 0, 1}

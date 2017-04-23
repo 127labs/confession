@@ -5,7 +5,7 @@ defmodule Confession.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      Confession.Endpoint.spec(),
+      Confession.Endpoint.spec,
       supervisor(Confession.Task, []),
       supervisor(Confession.Repo, []),
     ]

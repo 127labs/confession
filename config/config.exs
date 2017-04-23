@@ -32,7 +32,8 @@ use Mix.Config
 config :confession,
   ecto_repos: [Confession.Repo],
   fb_verification_token: System.get_env("FB_VERIFICATION_TOKEN"),
-  fb_page_access_token: System.get_env("FB_PAGE_ACCESS_TOKEN")
+  fb_page_access_token: System.get_env("FB_PAGE_ACCESS_TOKEN"),
+  secret_key_base: System.get_env("SECRET_KEY")
 
 config :confession, Confession.Repo,
   adapter: Ecto.Adapters.Postgres,
@@ -41,5 +42,7 @@ config :confession, Confession.Repo,
   password: System.get_env("POSTGRES_PASSWORD") || "postgres",
   hostname: System.get_env("POSTGRES_HOST") || "localhost",
   port: "5432"
+
+config :logger, level: :info
 
 import_config "*.secret.exs"

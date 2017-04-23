@@ -12,6 +12,7 @@ pipeline:
     build_args:
     - FB_PAGE_ACCESS_TOKEN=${FB_PAGE_ACCESS_TOKEN}
     - FB_VERIFICATION_TOKEN=${FB_VERIFICATION_TOKEN}
+    - SECRET_KEY_BASE=${SECRET_KEY_BASE}
   deploy:
     image: ipedrazas/drone-helm
     api_server: https://${KUBERNETES_MASTER}/
