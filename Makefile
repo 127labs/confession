@@ -1,5 +1,5 @@
 default:
-	@mix run --no-halt --no-recompile
+	@mix run --no-halt --no-compile
 dev:
 	@iex -S mix
 setup:
