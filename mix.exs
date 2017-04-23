@@ -9,6 +9,7 @@ defmodule Confession.Mixfile do
       build_embedded: Mix.env == :prod,
       start_permanent: Mix.env == :prod,
       deps: deps(),
+      aliases: aliases(),
      ]
   end
 
@@ -32,5 +33,12 @@ defmodule Confession.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:ecto, "~> 2.1"},
     ]
+  end
+
+  defp aliases do
+    ["ecto.setup": ["ecto.create", "ecto.migrate", "ecto.seed"],
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+     "ecto.seed": "run priv/repo/seeds.exs",
+     "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end
