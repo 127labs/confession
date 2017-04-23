@@ -47,14 +47,9 @@ defmodule Confession do
         Map.put(conn, :secret_key_base, Application.get_env(:confession, :secret_key_base))
       end
 
-      def spec do
-        proto = :http
-        ip    = {127, 0, 0, 1}
-        port  = 4000
-
-        Logger.info "Starting server on " <> "#{proto}://#{:inet_parse.ntoa(ip)}:#{port}"
-
-        Plug.Adapters.Cowboy.child_spec(proto, __MODULE__, [], [port: port, ip: ip])
+      def start_link do
+        Logger.info "Starting server on http://0.0.0.0:4000"
+        Plug.Adapters.Cowboy.http(__MODULE__, [])
       end
     end
   end
