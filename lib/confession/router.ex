@@ -1,6 +1,7 @@
 defmodule Confession.Router do
   use Confession, :router
 
+  get "/", to: Confession.PageController, init_opts: [action: :index]
   get "/webhook", to: Confession.WebhookController, init_opts: [action: :show]
   post "/webhook", to: Confession.WebhookController, init_opts: [action: :create]
 
