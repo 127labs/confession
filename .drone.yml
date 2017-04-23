@@ -14,7 +14,7 @@ pipeline:
     - FB_VERIFICATION_TOKEN=${FB_VERIFICATION_TOKEN}
   deploy:
     image: ipedrazas/drone-helm
-    api_server: https://kubernetes/
+    api_server: https://kubernetes.default.svc.cluster.local:30587/
     skip_tls_verify: true
     chart: ./charts/confession
     values: image.tag=${DRONE_COMMIT_SHA:0:7}
