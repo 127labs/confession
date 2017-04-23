@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ template "fullname" . }}-create-db-job"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "0"
+spec:
+  template:
+    metadata:
+      name: "{{ template "fullname" . }}-create-db-job"
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: "{{ template "fullname" . }}-create-db-job"
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: "{{ .Chart.Name }}-create-db-job"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["make", "db.create"]
+        env:
+        - name: HOST
+          value: confession.127labs.com
+        - name: POSTGRES_HOST
+          value: postgresql-postgresql
+        - name: POSTGRES_DATABASE
+          value: confession
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql-postgresql
+              key: postgres-password
+        - name: PORT
+          value: {{ .Values.service.internalPort | quote }}
+{{ toYaml .Values.env | indent 8 }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}

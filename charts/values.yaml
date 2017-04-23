@@ -1,0 +1,26 @@
+# Default values for ilinked.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicas: 1
+revisionHistoryLimit: 5
+image:
+  repository: asia.gcr.io/labs-127/confession
+  tag: latest
+  pullPolicy: Always
+service:
+  name: confession
+  type: ClusterIP
+  externalPort: 80
+  internalPort: 4000
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+host: confession.127labs.com
+
+env:
+- name: MIX_ENV
+  value: prod

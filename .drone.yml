@@ -1,0 +1,19 @@
+pipeline:
+  publish:
+    image: plugins/docker
+    registry: asia.gcr.io
+    repo: ${DOCKER_REPO}
+    username: ${DOCKER_USERNAME}
+    password: ${DOCKER_PASSWORD}
+    email: imran.ismail@icommerce.asia
+    tags:
+      - latest
+      - ${DRONE_COMMIT_SHA:0:7}
+  deploy:
+    image: ipedrazas/drone-helm
+    api_server: https://kubernetes/
+    skip_tls_verify: true
+    chart: ./charts
+    values: image.tag=${DRONE_COMMIT_SHA:0:7}
+    release: confession
+    token: ${SERVICE_ACCOUNT_TOKEN}

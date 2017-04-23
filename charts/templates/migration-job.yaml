@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ template "fullname" . }}-migration-job"
+  labels:
+    heritage: {{ .Release.Service | quote }}
+    release: {{ template "fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-weight: "1"
+spec:
+  template:
+    metadata:
+      name: "{{ template "fullname" . }}-migration-job"
+      labels:
+        heritage: {{ .Release.Service | quote }}
+        release: "{{ template "fullname" . }}-migration-job"
+        chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: "{{ .Chart.Name }}-migration-job"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["make", "db.migrate"]
+        env:
+        - name: HOST
+          value: confession.127labs.com
+        - name: POSTGRES_HOST
+          value: postgresql-postgresql
+        - name: POSTGRES_DATABASE
+          value: confession
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgresql-postgresql
+              key: postgres-password
+        - name: PORT
+          value: {{ .Values.service.internalPort | quote }}
+{{ toYaml .Values.env | indent 8 }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
