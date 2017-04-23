@@ -41,10 +41,6 @@ defmodule JSON do
       reraise Exception.normalize(:error, error, stacktrace), stacktrace
   end
 
-  defp transform(%Version{} = version) do
-    to_string(version)
-  end
-
   defp transform(%Decimal{} = decimal) do
     Decimal.to_string(decimal)
   end
