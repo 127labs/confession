@@ -7,8 +7,11 @@ pipeline:
     password: ${DOCKER_PASSWORD}
     email: imran.ismail@icommerce.asia
     tags:
-      - latest
-      - ${DRONE_COMMIT_SHA:0:7}
+    - latest
+    - ${DRONE_COMMIT_SHA:0:7}
+    build_args:
+    - FB_PAGE_ACCESS_TOKEN=${FB_PAGE_ACCESS_TOKEN}
+    - FB_VERIFICATION_TOKEN=${FB_VERIFICATION_TOKEN}
   deploy:
     image: ipedrazas/drone-helm
     api_server: https://kubernetes/

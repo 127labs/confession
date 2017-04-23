@@ -29,14 +29,17 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :confession, ecto_repos: [Confession.Repo]
+config :confession,
+  ecto_repos: [Confession.Repo],
+  fb_verification_token: System.get_env("FB_VERIFICATION_TOKEN"),
+  fb_page_access_token: System.get_env("FB_PAGE_ACCESS_TOKEN")
 
 config :confession, Confession.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "confession_#{Mix.env}",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
+  database: System.get_env("POSTGRES_DATABASE") || "confession_#{Mix.env}",
+  username: System.get_env("POSTGRES_USER") || "postgres",
+  password: System.get_env("POSTGRES_PASSWORD") || "postgres",
+  hostname: System.get_env("POSTGRES_HOST") || "localhost",
   port: "5432"
 
-import_config "config.secret.exs"
+import_config "*.secret.exs"
