@@ -2,9 +2,9 @@ pipeline:
   publish:
     image: plugins/docker
     registry: asia.gcr.io
-    repo: ${DOCKER_REPO}
-    username: ${DOCKER_USERNAME}
-    password: ${DOCKER_PASSWORD}
+    repo: asia.gcr.io/labs-127/confession
+    username: _json_key
+    password: ${GCP_SA_KEY}
     email: imran.ismail@icommerce.asia
     tags:
     - latest
@@ -14,9 +14,9 @@ pipeline:
     - FB_VERIFICATION_TOKEN=${FB_VERIFICATION_TOKEN}
   deploy:
     image: ipedrazas/drone-helm
-    api_server: https://kubernetes.default.svc.cluster.local/
+    api_server: https://${KUBERNETES_MASTER}/
     skip_tls_verify: true
     chart: ./charts/confession
     values: image.tag=${DRONE_COMMIT_SHA:0:7}
     release: confession
-    token: ${SERVICE_ACCOUNT_TOKEN}
+    token: ${KUBERNETES_SA_TOKEN}
